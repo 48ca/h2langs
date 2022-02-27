@@ -63,7 +63,7 @@ def print_durations(name, durations):
     best_lang = sd[0]
     fastest = durations[best_lang]
     for lang in sd:
-        print('{:9s} => +{}'.format(LANGUAGES[lang], durations[lang] - fastest))
+        print('{:9s} => +{:10.6f} (total:{:10.6f})'.format(LANGUAGES[lang], durations[lang] - fastest, durations[lang]))
 
 def main() -> int:
     if len(sys.argv) < 2:
