@@ -14,10 +14,11 @@ SOUND_NAME_PAT = re.compile(SOUND_NAME_REGEX)
 
 PICKLE_FILENAME = 'sound-data-new.pkl'
 
-def try_files(directory: str, dir_list: List[str]) -> Tuple[Optional[str], MissionLang]:
+def try_files(directory: str) -> Tuple[Optional[str], MissionLang]:
     extra_files = []
 
     final_lvl_lang = MissionLang()
+    dir_list = os.listdir(directory)
     for sound in dir_list:
         res = SOUND_NAME_PAT.match(sound)
         if not res:
@@ -35,29 +36,6 @@ def try_files(directory: str, dir_list: List[str]) -> Tuple[Optional[str], Missi
         final_lvl_lang.add_file(parsed_file)
 
     return None, final_lvl_lang
-
-def get_files_from_sound_dir(sound_dir: str) -> Tuple[Optional[str], MissionLang]:
-    lvl_dialog_dir = os.path.join(sound_dir, 'dialog', 'levels')
-    if not os.path.isdir(lvl_dialog_dir):
-        return 'sound directory has incorrect structure: {}'.format(lvl_dialog_dir), None
-    bsps = os.listdir(lvl_dialog_dir)
-    if len(bsps) != 1:
-        return 'found more than one bsp for mission: {}'.format(bsps), None
-    bsp = bsps[0]
-    real_dir = os.path.join(lvl_dialog_dir, bsp, 'mission')
-    if not os.path.isdir(real_dir):
-        return 'not a directory: {}'.format(real_dir), None
-
-    return try_files(real_dir, os.listdir(real_dir))
-
-def canonicalize_archive(lang_dir: str) -> Tuple[str, MissionLang]:
-    files = os.listdir(lang_dir)
-    if len(files) == 1 and files[0] == 'sound':
-        sound_dir = os.path.join(lang_dir, 'sound')
-        if os.path.isdir(sound_dir):
-            return get_files_from_sound_dir(sound_dir)
-
-    return try_files(lang_dir, files)
 
 def get_missions_new(archive: str):
     extra_files = []
@@ -95,7 +73,7 @@ def get_missions_new(archive: str):
                 sys.stderr.write('Not a directory: {}\n'.format(level_dir))
                 continue
 
-            err, mission_lang = try_files(level_dir, os.listdir(level_dir))
+            err, mission_lang = try_files(level_dir)
             if err:
                 sys.stderr.write('Got error while reading archive: {}: {}\n'.format(level_dir, err))
                 continue
