@@ -71,6 +71,81 @@ def print_durations(name, durations, totals):
     for lang in sd:
         print('{:9s} => +{:10.6f} (total:{:11.6f})'.format(LANGUAGES[lang], durations[lang] - fastest, durations[lang]))
 
+class VariantSet():
+    def __init__(self):
+        self._variants = set()
+
+    def add_variant(self, variant):
+        self._variants.add(variant)
+
+    def has_variant(self, variant):
+        return variant in self._variants
+
+    def __str__(self):
+        return str(self._variants)
+
+DEFAULT_VARIANT = VariantSet()
+
+class LanguageTotalTracker():
+    def __init__(self):
+        self._categories = {'full_game': {DEFAULT_VARIANT: {}}}
+
+    def _add_to_totals(self, lang_times, lang, dur):
+        if lang not in lang_times:
+            lang_times[lang] = 0.
+        lang_times[lang] += dur
+
+    def add_time(self, mission, durations):
+        if mission not in self._categories:
+            self._categories[mission] = {DEFAULT_VARIANT: {}}
+        # Add the time to all categories.
+        for cat in [mission, 'full_game']:
+            variants = self._categories[cat]
+            for variant in variants:
+                for lang, dur in durations.items():
+                    self._add_to_totals(variants[variant], lang, dur)
+
+    def add_new_variant(self, mission, variants):
+        # Duplicate all existing variants, and then add each of the new variants.
+        for cat in [mission, 'full_game']:
+            new_totals = {}
+            old_totals = self._categories[cat]
+            for existing_variant in old_totals:
+                for new_variants in variants.values():
+                    for new_variant in new_variants:
+                        old_stuff = copy.deepcopy(old_totals[existing_variant])
+                        new_vk = copy.deepcopy(existing_variant)
+                        new_vk.add_variant(new_variant)
+                        new_totals[new_vk] = old_stuff
+            self._categories[cat] = new_totals
+
+    def add_variant_time(self, mission, variants_to_try, durations):
+        if mission not in self._categories:
+            self._categories[mission] = {DEFAULT_VARIANT: {}}
+        # Add the time to a specific variant.
+        for cat in [mission, 'full_game']:
+            variants = self._categories[cat]
+            num_added = 0
+            num_missed = 0
+            for variant in variants:
+                for lang, dur in durations.items():
+                    for var_val in variants_to_try.values():
+                        if variant.has_variant(var_val):
+                            self._add_to_totals(variants[variant], lang, dur)
+                            num_added += 1
+                        else:
+                            num_missed += 1
+            if num_added != num_missed:
+                raise RuntimeError('Bad total counting: {} {}'.format(num_added, num_missed))
+    def print_out(self):
+        print('========== TOTALS ==========')
+        for cat in self._categories:
+            for variant, durations in self._categories[cat].items():
+                if variant != DEFAULT_VARIANT:
+                    print_durations('{} [variant={}]'.format(cat, variant), durations, True)
+                else:
+                    print_durations(cat, durations, True)
+
 def main() -> int:
     parser = argparse.ArgumentParser(description='Process halo timing differences.')
     parser.add_argument('archive', type=str, help='Path to the archive (or pickle)')
@@ -118,7 +193,7 @@ def main() -> int:
                 sys.stderr.write('Missions mismatched: {}\n'.format(l))
         return 1
 
-    language_totals = {'': {}}
+    language_totals = LanguageTotalTracker()
     for name, sound in SOUNDS_TO_CHECK.items():
         if name.startswith('SKIP'):
             continue
@@ -132,59 +207,26 @@ def main() -> int:
             continue
 
         do_totaling = not (global_no_totaling or nototal or (noarmory and mission_id.key == ARMORY.key))
-        def add_to_totals(mkey, variant, lang, dur):
-            if 'full_game' not in language_totals[variant]:
-                language_totals[variant]['full_game'] = {}
-            if lang not in language_totals[variant]['full_game']:
-                language_totals[variant]['full_game'][lang] = 0.
-            language_totals[variant]['full_game'][lang] += dur
-
-            if mkey not in language_totals[variant]:
-                language_totals[variant][mkey] = {}
-            if lang not in language_totals[variant][mkey]:
-                language_totals[variant][mkey][lang] = 0.
-            language_totals[variant][mkey][lang] += dur
 
         mission = missions[mission_id.key]
         if not variants:
             durations = find_durations(mission_id.key, indices, {}, mission, difficulty)
             print_durations(name, durations, do_totaling)
             if do_totaling:
-                for variant in language_totals:
-                    for lang, dur in durations.items():
-                        add_to_totals(mission_id.key, variant, lang, dur)
+                language_totals.add_time(mission_id.key, durations)
         if variants:
             if do_totaling:
-                new_totals = {}
-                for existing_variant in language_totals:
-                    for new_variants in variants.values():
-                        for new_variant in new_variants:
-                            new_totals["{}|{}".format(existing_variant, new_variant)] = copy.deepcopy(language_totals[existing_variant])
-                language_totals = new_totals
+                language_totals.add_new_variant(mission_id.key, variants)
 
             for instance in itertools.product(*variants.values()):
                 variants_to_try = dict(zip(variants.keys(), instance))
                 durations = find_durations(mission_id.key, indices, variants_to_try, mission, difficulty)
                 print_durations('{} [variant={}]'.format(name, variants_to_try), durations, do_totaling)
                 if do_totaling:
-                    for lang, dur in durations.items():
-                        for var_val in variants_to_try.values():
-                            num_added = 0
-                            num_missed = 0
-                            for e_var in language_totals:
-                                if var_val in e_var:
-                                    add_to_totals(mission_id.key, e_var, lang, dur)
-                                    num_added += 1
-                                else:
-                                    num_missed += 1
-                            if num_added != num_missed or (num_added + num_missed < len(language_totals)):
-                                raise RuntimeError('Bad total counting')
+                    language_totals.add_variant_time(mission_id.key, variants_to_try, durations)
 
     if do_totaling:
-        print('========== TOTALS ==========')
-        for variant, cats in language_totals.items():
-            for cat, tot in cats.items():
-                print_durations('{} [variants={}]'.format(cat, variant), tot, True)
+        language_totals.print_out()
 
     return 0
 
