@@ -4,18 +4,19 @@ import os
 import sys
 import itertools
 import copy
+import argparse
 
 from typing import Tuple, List, Optional, Set, Dict
 
 from h2lang.create_sound_data import get_missions
 from h2lang.create_data_from_full_archive import get_missions_new
 from h2lang.common import Mission, LANGUAGES
-from config import SOUNDS_TO_CHECK, Special
+from config import SOUNDS_TO_CHECK, Special, Difficulty
 
 def check_missions(missions: Dict[str, Mission]) -> List[bool]:
     return list(map(lambda l: l.check_matching(), missions.values()))
 
-def find_durations(mission_name, indices, variants, mission) -> Optional[Dict[str, float]]:
+def find_durations(mission_name, indices, variants, mission, difficulty) -> Optional[Dict[str, float]]:
     total_durations = {}
     for code, language in mission.languages.items():
         total_dur = 0.
@@ -51,7 +52,7 @@ def find_durations(mission_name, indices, variants, mission) -> Optional[Dict[st
             if not is_special:
                 total_dur += snd_file.duration
             else:
-                total_dur += idx_or_special.calculate(snd_file.duration)
+                total_dur += idx_or_special.calculate(snd_file.duration, difficulty)
         total_durations[code] = total_dur
     return total_durations
 
@@ -70,16 +71,29 @@ def print_durations(name, durations, totals):
         print('{:9s} => +{:10.6f} (total:{:11.6f})'.format(LANGUAGES[lang], durations[lang] - fastest, durations[lang]))
 
 def main() -> int:
-    if len(sys.argv) < 2:
-        sys.stderr.write('usage: {} <path-to-archive OR path-to-pickle> [--new]\n'.format(sys.argv[0]))
+    use_new_format = False
+    noarmory = False
+
+    parser = argparse.ArgumentParser(description='Process halo timing differences.')
+    parser.add_argument('archive', type=str, help='Path to the archive (or pickle)')
+    parser.add_argument('--noarmory', default=False, help='Don\'t include armory in full-game duration summation.', action='store_const', const=noarmory)
+    parser.add_argument('--new', default=False, help='Use new archive format (experimental).', action='store_const', const=use_new_format)
+    parser.add_argument('--difficulty', type=str, default='easy', help='Specify the difficulty.')
+    args = parser.parse_args()
+
+    if args.difficulty == 'easy':
+        difficulty = Difficulty.EASY
+    elif args.difficulty == 'normal':
+        difficulty = Difficulty.NORMAL
+    elif args.difficulty == 'heroic':
+        difficulty = Difficulty.HEROIC
+    elif args.difficulty == 'legendary':
+        difficulty = Difficulty.LEGENDARY
+    else:
+        sys.stderr.write('Bad difficulty: {}\n'.format(args.difficulty))
         return 1
 
-    archive = sys.argv[1]
-
-    if len(sys.argv) >= 3:
-        use_new_format = sys.argv[2] == '--new'
-    else:
-        use_new_format = False
+    archive = args.archive
 
     if not os.path.exists(archive):
         sys.stderr.write('Path does not exist: {}\n'.format(arhive))
@@ -114,16 +128,18 @@ def main() -> int:
             print('ERROR: Bad config: {}, mission not found'.format(name))
             continue
 
+        do_totaling = not nototal and not (noarmory and mission_id == ARMORY.id)
+
         mission = missions[mission_id.key]
         if not variants:
-            durations = find_durations(mission_id.key, indices, {}, mission)
-            print_durations(name, durations, not nototal)
-            if not nototal:
+            durations = find_durations(mission_id.key, indices, {}, mission, difficulty)
+            print_durations(name, durations, do_totaling)
+            if do_totaling:
                 for variant in language_totals:
                     for lang, dur in durations.items():
                         language_totals[variant][lang] += dur
         if variants:
-            if not nototal:
+            if do_totaling:
                 new_totals = {}
                 for existing_variant in language_totals:
                     for new_variants in variants.values():
@@ -133,9 +149,9 @@ def main() -> int:
 
             for instance in itertools.product(*variants.values()):
                 variants_to_try = dict(zip(variants.keys(), instance))
-                durations = find_durations(mission_id.key, indices, variants_to_try, mission)
-                print_durations('{} [variant={}]'.format(name, variants_to_try), durations, not nototal)
-                if not nototal:
+                durations = find_durations(mission_id.key, indices, variants_to_try, mission, difficulty)
+                print_durations('{} [variant={}]'.format(name, variants_to_try), durations, do_totaling)
+                if do_totaling:
                     for lang, dur in durations.items():
                         for var_val in variants_to_try.values():
                             num_added = 0

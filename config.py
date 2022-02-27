@@ -1,12 +1,31 @@
+from enum import Enum
 from h2lang.missions import *
 
+class Difficulty(Enum):
+    EASY = 0
+    NORMAL = 1
+    HEROIC = 2
+    LEGENDARY = 3
+
+EASY = Difficulty.EASY
+NORMAL = Difficulty.NORMAL
+HEROIC = Difficulty.HEROIC
+LEGENDARY = Difficulty.LEGENDARY
+
+ALL_DIFFICULTIES = {EASY, NORMAL, HEROIC, LEGENDARY}
+
 class Special:
-    def __init__(self, index, func):
+    def __init__(self, index, func=None, difficulties=ALL_DIFFICULTIES):
         self._func = func
         self.index = index
+        self._difficulties = difficulties
 
-    def calculate(self, duration):
-        return self._func(duration)
+    def calculate(self, duration, difficulty):
+        if difficulty not in self._difficulties:
+            return 0
+        if self._func:
+            return self._func(duration)
+        return duration
 
 SOUNDS_TO_CHECK = {
     'armory_training_look': {
@@ -198,6 +217,31 @@ SOUNDS_TO_CHECK = {
             1400, # One final cable, Arbiter.
         }
     },
+    'oracle_heretic_leader': {
+        'mission': ORACLE,
+        'indices': {
+            # How did the prophets buy your loyalty, Arbiter?
+            Special(800, difficulties={HEROIC, LEGENDARY}),
+            # With a new command? A new fleet?
+            Special(810, difficulties={HEROIC, LEGENDARY}),
+            # Or was it the promise? Their Great Journey!
+            Special(820, difficulties={HEROIC, LEGENDARY}),
+            # Look around you, Arbiter.
+            Special(830, difficulties={LEGENDARY}),
+            # This facility ... study of the parasite.
+            Special(840, difficulties={LEGENDARY}),
+            # But where are ... was the result?
+            Special(850, difficulties={LEGENDARY}),
+            # All that time ... foul creatures on ice.
+            Special(860, difficulties={LEGENDARY}),
+            # And now ... have us worship?
+            Special(870, difficulties={LEGENDARY}),
+            # Trascended? Hardly.
+            Special(880, difficulties={LEGENDARY}),
+            # Come ... where they went.
+            Special(890, difficulties={LEGENDARY}),
+        }
+    },
     'oracle_total': {
         'mission': ORACLE,
         'indices': {
@@ -206,6 +250,26 @@ SOUNDS_TO_CHECK = {
             70, # Hahaha, get in line.
             1380, # That's one ... at the station list.
             1400, # One final cable, Arbiter.
+            # How did the prophets buy your loyalty, Arbiter?
+            Special(800, difficulties={HEROIC, LEGENDARY}),
+            # With a new command? A new fleet?
+            Special(810, difficulties={HEROIC, LEGENDARY}),
+            # Or was it the promise? Their Great Journey!
+            Special(820, difficulties={HEROIC, LEGENDARY}),
+            # Look around you, Arbiter.
+            Special(830, difficulties={LEGENDARY}),
+            # This facility ... study of the parasite.
+            Special(840, difficulties={LEGENDARY}),
+            # But where are ... was the result?
+            Special(850, difficulties={LEGENDARY}),
+            # All that time ... foul creatures on ice.
+            Special(860, difficulties={LEGENDARY}),
+            # And now ... have us worship?
+            Special(870, difficulties={LEGENDARY}),
+            # Trascended? Hardly.
+            Special(880, difficulties={LEGENDARY}),
+            # Come ... where they went.
+            Special(890, difficulties={LEGENDARY}),
         },
         'nototal': True,
     },
