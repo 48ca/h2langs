@@ -150,7 +150,7 @@ SOUNDS_TO_CHECK = {
         'nototal': True,
     },
     # It's a little bit unclear to me how dialog skip works, but I think
-    # the effect is that we don't wait for the 'holo-drone' line.
+    # the effect is that we don't wait for the 'flattered' line.
     'oracle_start_dialog_skip': {
         'mission': ORACLE,
         'indices': {
