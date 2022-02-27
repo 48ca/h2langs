@@ -1,4 +1,4 @@
-==== armory_training_look ====
+ ====== armory_training_look ======
 French    => +  0.000000 (total:  20.705669)
 Italian   => +  0.309524 (total:  21.015193)
 Spanish   => +  1.123129 (total:  21.828798)
@@ -7,7 +7,7 @@ English   => +  2.384807 (total:  23.090476)
 German    => +  3.079025 (total:  23.784694)
 Korean    => +  3.932426 (total:  24.638095)
 Chinese   => +  5.891270 (total:  26.596939)
-==== armory_training_move ====
+ ====== armory_training_move ======
 Japanese  => +  0.000000 (total:   6.178685)
 French    => +  0.207823 (total:   6.386508)
 Spanish   => +  0.306576 (total:   6.485261)
@@ -16,16 +16,7 @@ English   => +  0.837188 (total:   7.015873)
 Korean    => +  1.123129 (total:   7.301814)
 German    => +  1.456236 (total:   7.634921)
 Chinese   => +  1.658163 (total:   7.836848)
-==== armory_training_shield [variant={1010: 'l01_1010b_gun'}] ====
-French    => +  0.000000 (total:  25.380952)
-German    => +  0.088435 (total:  25.469388)
-Japanese  => +  0.583673 (total:  25.964626)
-Spanish   => +  1.027324 (total:  26.408277)
-Italian   => +  1.176190 (total:  26.557143)
-English   => +  1.599206 (total:  26.980159)
-Korean    => +  1.787868 (total:  27.168821)
-Chinese   => +  3.737868 (total:  29.118821)
-==== armory_training_shield [variant={1010: 'l01_1010a_gun'}] ====
+ ====== armory_training_shield [variant={1010: 'l01_1010a_gun'}] ======
 German    => +  0.000000 (total:  23.475170)
 French    => +  0.543878 (total:  24.019048)
 Japanese  => +  0.744331 (total:  24.219501)
@@ -34,7 +25,16 @@ Italian   => +  0.893197 (total:  24.368367)
 English   => +  2.250680 (total:  25.725850)
 Korean    => +  2.482086 (total:  25.957256)
 Chinese   => +  3.183673 (total:  26.658844)
-==== armory_training_done ====
+ ====== armory_training_shield [variant={1010: 'l01_1010b_gun'}] ======
+French    => +  0.000000 (total:  25.380952)
+German    => +  0.088435 (total:  25.469388)
+Japanese  => +  0.583673 (total:  25.964626)
+Spanish   => +  1.027324 (total:  26.408277)
+Italian   => +  1.176190 (total:  26.557143)
+English   => +  1.599206 (total:  26.980159)
+Korean    => +  1.787868 (total:  27.168821)
+Chinese   => +  3.737868 (total:  29.118821)
+ ====== armory_training_done ======
 French    => +  0.000000 (total:   6.870748)
 German    => +  0.661791 (total:   7.532540)
 Italian   => +  0.695692 (total:   7.566440)
@@ -43,7 +43,7 @@ Spanish   => +  0.946259 (total:   7.817007)
 Korean    => +  1.236621 (total:   8.107370)
 Japanese  => +  2.278685 (total:   9.149433)
 Chinese   => +  2.597052 (total:   9.467800)
-==== armory_training_tram ====
+ ====== armory_training_tram ======
 Spanish   => +  0.000000 (total:   1.551361)
 Japanese  => +  0.033900 (total:   1.585261)
 German    => +  0.185714 (total:   1.737075)
@@ -52,7 +52,7 @@ Italian   => +  0.611678 (total:   2.163039)
 English   => +  0.704535 (total:   2.255896)
 Korean    => +  0.704535 (total:   2.255896)
 Chinese   => +  0.704535 (total:   2.255896)
-==== cairo_malta ====
+ ====== cairo_malta ======
 German    => +  0.000000 (total:   7.281179)
 Italian   => +  0.377324 (total:   7.658503)
 Japanese  => +  0.411224 (total:   7.692404)
@@ -61,7 +61,7 @@ Spanish   => +  0.638209 (total:   7.919388)
 Chinese   => +  1.050907 (total:   8.332086)
 English   => +  1.065646 (total:   8.346825)
 Korean    => +  1.065646 (total:   8.346825)
-==== cairo_athens ====
+ ====== cairo_athens ======
 Japanese  => +  0.000000 (total:  12.553401)
 German    => +  0.347846 (total:  12.901247)
 Italian   => +  1.099546 (total:  13.652948)
@@ -70,7 +70,7 @@ Spanish   => +  1.560884 (total:  14.114286)
 Chinese   => +  1.893991 (total:  14.447392)
 English   => +  2.554308 (total:  15.107710)
 Korean    => +  2.554308 (total:  15.107710)
-==== arbiter_start ====
+ ====== arbiter_start ======
 German    => +  0.000000 (total:   7.132313)
 Japanese  => +  0.660317 (total:   7.792630)
 Spanish   => +  0.912358 (total:   8.044671)
@@ -79,7 +79,7 @@ French    => +  0.984580 (total:   8.116893)
 English   => +  1.167347 (total:   8.299660)
 Korean    => +  1.167347 (total:   8.299660)
 Chinese   => +  1.217460 (total:   8.349773)
-==== arbiter_no_glassclip ====
+ ====== arbiter_no_glassclip ======
 French    => +  0.000000 (total:   3.362018)
 Japanese  => +  0.014739 (total:   3.376757)
 Spanish   => +  0.278571 (total:   3.640590)
@@ -88,7 +88,7 @@ Italian   => +  0.315420 (total:   3.677438)
 English   => +  0.409751 (total:   3.771769)
 Korean    => +  0.409751 (total:   3.771769)
 Chinese   => +  0.564512 (total:   3.926531)
-==== oracle_start_standard ==== (no totals)
+ ====== oracle_start_standard ====== (no totals)
 Italian   => +  0.000000 (total:  12.568141)
 Japanese  => +  0.800340 (total:  13.368481)
 Spanish   => +  1.267574 (total:  13.835714)
@@ -97,7 +97,7 @@ French    => +  1.554989 (total:  14.123129)
 English   => +  2.126871 (total:  14.695011)
 Korean    => +  2.126871 (total:  14.695011)
 Chinese   => +  2.700227 (total:  15.268367)
-==== oracle_start_dialog_skip ====
+ ====== oracle_start_dialog_skip ======
 Italian   => +  0.000000 (total:   6.927438)
 Japanese  => +  0.053061 (total:   6.980499)
 Spanish   => +  0.198980 (total:   7.126417)
@@ -106,7 +106,7 @@ French    => +  0.593991 (total:   7.521429)
 English   => +  1.019955 (total:   7.947392)
 Korean    => +  1.019955 (total:   7.947392)
 Chinese   => +  1.560884 (total:   8.488322)
-==== oracle_cables ====
+ ====== oracle_cables ======
 French    => +  0.000000 (total:   4.392290)
 Japanese  => +  0.142971 (total:   4.535261)
 Spanish   => +  0.343424 (total:   4.735714)
@@ -115,7 +115,7 @@ English   => +  0.576304 (total:   4.968594)
 Korean    => +  0.576304 (total:   4.968594)
 Chinese   => +  0.748753 (total:   5.141043)
 German    => +  0.818027 (total:   5.210317)
-==== oracle_heretic_leader ====
+ ====== oracle_heretic_leader ======
 German    => +  0.000000 (total:  36.556236)
 French    => +  0.673583 (total:  37.229819)
 Spanish   => +  0.949206 (total:  37.505442)
@@ -124,7 +124,7 @@ Japanese  => +  1.826190 (total:  38.382426)
 English   => +  2.091497 (total:  38.647732)
 Korean    => +  2.091497 (total:  38.647732)
 Chinese   => +  2.661905 (total:  39.218141)
-==== regret_first_elevator ====
+ ====== regret_first_elevator ======
 German    => +  0.000000 (total:   7.833900)
 French    => +  0.112018 (total:   7.945918)
 Chinese   => +  0.287415 (total:   8.121315)
@@ -133,7 +133,7 @@ Italian   => +  0.657370 (total:   8.491270)
 Japanese  => +  0.770862 (total:   8.604762)
 English   => +  0.803288 (total:   8.637188)
 Korean    => +  0.803288 (total:   8.637188)
-==== regret_end ====
+ ====== regret_end ======
 German    => +  0.000000 (total:   5.777778)
 Chinese   => +  0.291837 (total:   6.069615)
 Japanese  => +  0.302154 (total:   6.079932)
@@ -142,7 +142,7 @@ Italian   => +  0.655896 (total:   6.433673)
 Spanish   => +  0.841610 (total:   6.619388)
 English   => +  0.989002 (total:   6.766780)
 Korean    => +  0.989002 (total:   6.766780)
-==== si_end_fight ====
+ ====== si_end_fight ======
 German    => +  0.000000 (total:   1.444444)
 Italian   => +  0.185714 (total:   1.630159)
 Spanish   => +  0.219615 (total:   1.664059)
@@ -151,7 +151,7 @@ French    => +  0.415646 (total:   1.860091)
 English   => +  0.535034 (total:   1.979478)
 Korean    => +  0.535034 (total:   1.979478)
 Chinese   => +  0.564512 (total:   2.008957)
-==== gm_begin ====
+ ====== gm_begin ======
 German    => +  0.000000 (total:  14.172031)
 Chinese   => +  0.420469 (total:  14.592500)
 Italian   => +  1.306094 (total:  15.478125)
@@ -160,7 +160,7 @@ French    => +  2.061719 (total:  16.233750)
 Spanish   => +  2.571562 (total:  16.743594)
 English   => +  2.738125 (total:  16.910156)
 Korean    => +  2.738125 (total:  16.910156)
-==== gm_all_doors ====
+ ====== gm_all_doors ======
 Italian   => +  0.000000 (total:   0.765781)
 Japanese  => +  0.034531 (total:   0.800312)
 German    => +  0.205156 (total:   0.970938)
@@ -169,7 +169,7 @@ Spanish   => +  0.314844 (total:   1.080625)
 French    => +  0.314844 (total:   1.080625)
 Korean    => +  0.314844 (total:   1.080625)
 Chinese   => +  0.406250 (total:   1.172031)
-==== gm_end ====
+ ====== gm_end ======
 Chinese   => +  0.000000 (total:  14.807813)
 German    => +  2.017031 (total:  16.824844)
 Italian   => +  3.028594 (total:  17.836406)
@@ -178,7 +178,7 @@ English   => +  3.995469 (total:  18.803281)
 Spanish   => +  3.995469 (total:  18.803281)
 French    => +  3.995469 (total:  18.803281)
 Korean    => +  4.292031 (total:  19.099844)
-==== tgj_scarab_door ====
+ ====== tgj_scarab_door ======
 French    => +  0.000000 (total:   2.900625)
 German    => +  0.188906 (total:   3.089531)
 Italian   => +  0.286406 (total:   3.187031)
@@ -187,17 +187,8 @@ Japanese  => +  0.487500 (total:   3.388125)
 Chinese   => +  0.566719 (total:   3.467344)
 English   => +  0.627656 (total:   3.528281)
 Korean    => +  0.627656 (total:   3.528281)
-========== TOTALS ==========
-==== full_game [variant={'l01_1010b_gun'}] ====
-German    => +  0.000000 (total: 196.449067)
-French    => +  2.525337 (total: 198.974404)
-Italian   => +  4.034717 (total: 200.483784)
-Japanese  => +  4.674662 (total: 201.123729)
-Spanish   => +  7.155702 (total: 203.604769)
-English   => + 15.414433 (total: 211.863500)
-Chinese   => + 16.970099 (total: 213.419166)
-Korean    => + 18.114964 (total: 214.564031)
-==== full_game [variant={'l01_1010a_gun'}] ====
+ ========== TOTALS ========== 
+ ====== Full Game [variant={'l01_1010a_gun'}] ======
 German    => +  0.000000 (total: 194.454849)
 French    => +  3.157650 (total: 197.612499)
 Italian   => +  3.840159 (total: 198.295008)
@@ -206,16 +197,16 @@ Spanish   => +  7.023049 (total: 201.477899)
 English   => + 16.154342 (total: 210.609192)
 Chinese   => + 16.504339 (total: 210.959189)
 Korean    => + 18.897617 (total: 213.352466)
-==== armory [variant={'l01_1010b_gun'}] ====
-French    => +  0.000000 (total:  61.331519)
-Italian   => +  2.610317 (total:  63.941837)
-Spanish   => +  2.759184 (total:  64.090703)
-Japanese  => +  4.219841 (total:  65.551361)
-German    => +  4.827098 (total:  66.158617)
-English   => +  5.736508 (total:  67.068027)
-Korean    => +  8.140476 (total:  69.471995)
-Chinese   => + 13.944785 (total:  75.276304)
-==== armory [variant={'l01_1010a_gun'}] ====
+ ====== Full Game [variant={'l01_1010b_gun'}] ======
+German    => +  0.000000 (total: 196.449067)
+French    => +  2.525337 (total: 198.974404)
+Italian   => +  4.034717 (total: 200.483784)
+Japanese  => +  4.674662 (total: 201.123729)
+Spanish   => +  7.155702 (total: 203.604769)
+English   => + 15.414433 (total: 211.863500)
+Chinese   => + 16.970099 (total: 213.419166)
+Korean    => + 18.114964 (total: 214.564031)
+ ====== Armory [variant={'l01_1010a_gun'}] ======
 French    => +  0.000000 (total:  59.969615)
 Italian   => +  1.783447 (total:  61.753061)
 Spanish   => +  1.994218 (total:  61.963832)
@@ -224,7 +215,16 @@ German    => +  4.194785 (total:  64.164399)
 English   => +  5.844104 (total:  65.813719)
 Korean    => +  8.290816 (total:  68.260431)
 Chinese   => + 12.846712 (total:  72.816327)
-==== cairo ====
+ ====== Armory [variant={'l01_1010b_gun'}] ======
+French    => +  0.000000 (total:  61.331519)
+Italian   => +  2.610317 (total:  63.941837)
+Spanish   => +  2.759184 (total:  64.090703)
+Japanese  => +  4.219841 (total:  65.551361)
+German    => +  4.827098 (total:  66.158617)
+English   => +  5.736508 (total:  67.068027)
+Korean    => +  8.140476 (total:  69.471995)
+Chinese   => + 13.944785 (total:  75.276304)
+ ====== Cairo Station ======
 German    => +  0.000000 (total:  20.182426)
 Japanese  => +  0.063379 (total:  20.245805)
 Italian   => +  1.129025 (total:  21.311451)
@@ -233,7 +233,7 @@ Spanish   => +  1.851247 (total:  22.033673)
 Chinese   => +  2.597052 (total:  22.779478)
 English   => +  3.272109 (total:  23.454535)
 Korean    => +  3.272109 (total:  23.454535)
-==== arbiter ====
+ ====== The Arbiter ======
 German    => +  0.000000 (total:  10.809751)
 Japanese  => +  0.359637 (total:  11.169388)
 French    => +  0.669161 (total:  11.478912)
@@ -242,7 +242,7 @@ Italian   => +  0.940363 (total:  11.750113)
 English   => +  1.261678 (total:  12.071429)
 Korean    => +  1.261678 (total:  12.071429)
 Chinese   => +  1.466553 (total:  12.276304)
-==== oracle ====
+ ====== Oracle ======
 French    => +  0.000000 (total:  49.143537)
 German    => +  0.041270 (total:  49.184807)
 Spanish   => +  0.224036 (total:  49.367574)
@@ -251,7 +251,7 @@ Japanese  => +  0.754649 (total:  49.898186)
 English   => +  2.420181 (total:  51.563719)
 Korean    => +  2.420181 (total:  51.563719)
 Chinese   => +  3.703968 (total:  52.847506)
-==== regret ====
+ ====== Regret ======
 German    => +  0.000000 (total:  13.611678)
 Chinese   => +  0.579252 (total:  14.190930)
 French    => +  0.741383 (total:  14.353061)
@@ -260,7 +260,7 @@ Spanish   => +  1.142290 (total:  14.753968)
 Italian   => +  1.313265 (total:  14.924943)
 English   => +  1.792290 (total:  15.403968)
 Korean    => +  1.792290 (total:  15.403968)
-==== si ====
+ ====== Sacred Icon ======
 German    => +  0.000000 (total:   1.444444)
 Italian   => +  0.185714 (total:   1.630159)
 Spanish   => +  0.219615 (total:   1.664059)
@@ -269,7 +269,7 @@ French    => +  0.415646 (total:   1.860091)
 English   => +  0.535034 (total:   1.979478)
 Korean    => +  0.535034 (total:   1.979478)
 Chinese   => +  0.564512 (total:   2.008957)
-==== gm ====
+ ====== Gravemind ======
 Chinese   => +  0.000000 (total:  30.572344)
 German    => +  1.395469 (total:  31.967813)
 Italian   => +  3.507969 (total:  34.080313)
@@ -278,7 +278,7 @@ French    => +  5.545313 (total:  36.117656)
 Spanish   => +  6.055156 (total:  36.627500)
 English   => +  6.221719 (total:  36.794063)
 Korean    => +  6.518281 (total:  37.090625)
-==== tgj ====
+ ====== The Great Journey ======
 French    => +  0.000000 (total:   2.900625)
 German    => +  0.188906 (total:   3.089531)
 Italian   => +  0.286406 (total:   3.187031)

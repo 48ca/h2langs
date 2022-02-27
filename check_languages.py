@@ -11,7 +11,7 @@ from typing import Tuple, List, Optional, Set, Dict
 from h2lang.create_sound_data import get_missions
 from h2lang.create_data_from_full_archive import get_missions_new
 from h2lang.common import Mission, LANGUAGES
-from h2lang.missions import ARMORY
+from h2lang.missions import ARMORY, MISSIONS
 from config import SOUNDS_TO_CHECK, Special, Difficulty
 
 def check_missions(missions: Dict[str, Mission]) -> List[bool]:
@@ -58,7 +58,7 @@ def find_durations(mission_name, indices, variants, mission, difficulty) -> Opti
     return total_durations
 
 def print_name(name, totals):
-    print('==== {} ===={}'.format(name, ' (no totals)' if not totals else ''))
+    print(' ====== {} ======{}'.format(name, ' (no totals)' if not totals else ''))
 
 def print_durations(name, durations, totals):
     print_name(name, totals)
@@ -88,7 +88,7 @@ DEFAULT_VARIANT = VariantSet()
 
 class LanguageTotalTracker():
     def __init__(self):
-        self._categories = {'full_game': {DEFAULT_VARIANT: {}}}
+        self._categories = {'Full Game': {DEFAULT_VARIANT: {}}}
 
     def _add_to_totals(self, lang_times, lang, dur):
         if lang not in lang_times:
@@ -99,7 +99,7 @@ class LanguageTotalTracker():
         if mission not in self._categories:
             self._categories[mission] = {DEFAULT_VARIANT: {}}
         # Add the time to all categories.
-        for cat in [mission, 'full_game']:
+        for cat in [mission, 'Full Game']:
             variants = self._categories[cat]
             for variant in variants:
                 for lang, dur in durations.items():
@@ -107,7 +107,7 @@ class LanguageTotalTracker():
 
     def add_new_variant(self, mission, variants):
         # Duplicate all existing variants, and then add each of the new variants.
-        for cat in [mission, 'full_game']:
+        for cat in [mission, 'Full Game']:
             new_totals = {}
             old_totals = self._categories[cat]
             for existing_variant in old_totals:
@@ -123,7 +123,7 @@ class LanguageTotalTracker():
         if mission not in self._categories:
             self._categories[mission] = {DEFAULT_VARIANT: {}}
         # Add the time to a specific variant.
-        for cat in [mission, 'full_game']:
+        for cat in [mission, 'Full Game']:
             variants = self._categories[cat]
             num_added = 0
             num_missed = 0
@@ -138,13 +138,14 @@ class LanguageTotalTracker():
             if num_added != num_missed:
                 raise RuntimeError('Bad total counting: {} {}'.format(num_added, num_missed))
     def print_out(self):
-        print('========== TOTALS ==========')
+        print(' ========== TOTALS ========== ')
         for cat in self._categories:
+            real_name = MISSIONS[cat].name if cat in MISSIONS else cat
             for variant, durations in self._categories[cat].items():
                 if variant != DEFAULT_VARIANT:
-                    print_durations('{} [variant={}]'.format(cat, variant), durations, True)
+                    print_durations('{} [variant={}]'.format(real_name, variant), durations, True)
                 else:
-                    print_durations(cat, durations, True)
+                    print_durations(real_name, durations, True)
 
 def main() -> int:
     parser = argparse.ArgumentParser(description='Process halo timing differences.')
@@ -153,6 +154,8 @@ def main() -> int:
     parser.add_argument('--new', default=False, help='Use new archive format (experimental).', action='store_true')
     parser.add_argument('--nototaling', default=False, help='Don\'t total anything.', action='store_true')
     parser.add_argument('--difficulty', type=str, default='easy', help='Specify the difficulty.')
+    parser.add_argument('--exclude', nargs='+',
+            help='Exclude a particular section from analysis (e.g., if doing Arbiter Glass Clip, it shouldn\'t be included.')
     args = parser.parse_args()
 
     if args.difficulty == 'easy':
@@ -195,6 +198,8 @@ def main() -> int:
 
     language_totals = LanguageTotalTracker()
     for name, sound in SOUNDS_TO_CHECK.items():
+        if args.exclude and name in args.exclude:
+            continue
         if name.startswith('SKIP'):
             continue
         mission_id = sound['mission']
