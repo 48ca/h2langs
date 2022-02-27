@@ -11,6 +11,7 @@ from typing import Tuple, List, Optional, Set, Dict
 from h2lang.create_sound_data import get_missions
 from h2lang.create_data_from_full_archive import get_missions_new
 from h2lang.common import Mission, LANGUAGES
+from h2lang.missions import ARMORY
 from config import SOUNDS_TO_CHECK, Special, Difficulty
 
 def check_missions(missions: Dict[str, Mission]) -> List[bool]:
@@ -71,15 +72,11 @@ def print_durations(name, durations, totals):
         print('{:9s} => +{:10.6f} (total:{:11.6f})'.format(LANGUAGES[lang], durations[lang] - fastest, durations[lang]))
 
 def main() -> int:
-    use_new_format = False
-    noarmory = False
-    no_totalling = False
-
     parser = argparse.ArgumentParser(description='Process halo timing differences.')
     parser.add_argument('archive', type=str, help='Path to the archive (or pickle)')
-    parser.add_argument('--noarmory', default=False, help='Don\'t include armory in full-game duration summation.', action='store_const', const=noarmory)
-    parser.add_argument('--new', default=False, help='Use new archive format (experimental).', action='store_const', const=use_new_format)
-    parser.add_argument('--nototaling', default=False, help='Don\'t total anything.', action='store_const', const=no_totalling)
+    parser.add_argument('--noarmory', help='Don\'t include armory in full-game duration summation.', action='store_true')
+    parser.add_argument('--new', default=False, help='Use new archive format (experimental).', action='store_true')
+    parser.add_argument('--nototaling', default=False, help='Don\'t total anything.', action='store_true')
     parser.add_argument('--difficulty', type=str, default='easy', help='Specify the difficulty.')
     args = parser.parse_args()
 
@@ -94,6 +91,10 @@ def main() -> int:
     else:
         sys.stderr.write('Bad difficulty: {}\n'.format(args.difficulty))
         return 1
+
+    noarmory = args.noarmory
+    global_no_totaling = args.nototaling
+    use_new_format = args.new
 
     archive = args.archive
 
@@ -130,7 +131,7 @@ def main() -> int:
             print('ERROR: Bad config: {}, mission not found'.format(name))
             continue
 
-        do_totaling = not no_totalling and not nototal and not (noarmory and mission_id == ARMORY.id)
+        do_totaling = not (global_no_totaling or nototal or (noarmory and mission_id.key == ARMORY.key))
         def add_to_totals(mkey, variant, lang, dur):
             if 'full_game' not in language_totals[variant]:
                 language_totals[variant]['full_game'] = {}
