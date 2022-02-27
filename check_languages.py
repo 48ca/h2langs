@@ -141,7 +141,7 @@ def main() -> int:
 
             if mkey not in language_totals[variant]:
                 language_totals[variant][mkey] = {}
-            if lang not in language_totals[variant][mission_id.key]:
+            if lang not in language_totals[variant][mkey]:
                 language_totals[variant][mkey][lang] = 0.
             language_totals[variant][mkey][lang] += dur
 
