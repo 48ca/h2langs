@@ -26,7 +26,6 @@ SOUNDS_TO_CHECK = {
             740, # Okay.
             770, # Everything checks out.
         },
-        'nototal': True,
     },
     'armory_training_move': {
         'mission': ARMORY,
@@ -35,7 +34,6 @@ SOUNDS_TO_CHECK = {
             800, # Move aroudn a little, get a feel for it.
             810, # When you're ready ... by the zapper.
         },
-        'nototal': True,
     },
     'armory_training_shield': {
         'mission': ARMORY,
@@ -55,7 +53,6 @@ SOUNDS_TO_CHECK = {
                 'l01_1010b_gun' # [no skip]
             }
         },
-        'nototal': True,
     },
     'armory_training_done': {
         'mission': ARMORY,
@@ -66,7 +63,6 @@ SOUNDS_TO_CHECK = {
             3360, # So Johnson, ... in one piece?
             990, # Sorry, Guns. It's classified. 
         },
-        'nototal': True,
     },
     'armory_training_tram': {
         'mission': ARMORY,
@@ -74,7 +70,6 @@ SOUNDS_TO_CHECK = {
             # Earth. Haven't seen it in years.
             Special(10, lambda dur: max(0, dur - 1))
         },
-        'nototal': True,
     },
     'armory_full': {
         'mission': ARMORY,
@@ -139,6 +134,43 @@ SOUNDS_TO_CHECK = {
             280, # Then they ... find it.
         }
     },
+    'cairo_full': {
+        'mission': CAIRO_STATION,
+        'indices': {
+            200, # Hey, check it out. ... boarders.
+            210, # Malta, what's your status, over?
+            220, # I don't believe it. ... We won!
+            230, # Uh-oh. They're leaving the Athens.
+            260, # Cortana, assessment.
+            270, # The explosion ... a bomb.
+            280, # Then they ... find it.
+        },
+        'nototal': True
+    },
+    'arbiter_start': {
+        'mission': THE_ARBITER,
+        'indices': {
+            210, # We are the arm ... the blade.
+            220, # Be silent ... without incident.
+        }
+    },
+    'arbiter_no_glassclip': {
+        'mission': THE_ARBITER,
+        'indices': {
+            470, # Deal with him, my brothers.
+            480, # I will defend the Oracle.
+        }
+    },
+    'arbiter_full': {
+        'mission': THE_ARBITER,
+        'indices': {
+            210, # We are the arm ... the blade.
+            220, # Be silent ... without incident.
+            470, # Deal with him, my brothers.
+            480, # I will defend the Oracle.
+        },
+        'nototal': True,
+    },
     'oracle_start_standard': {
         'mission': ORACLE,
         'indices': {
@@ -159,11 +191,47 @@ SOUNDS_TO_CHECK = {
             70, # Hahaha, get in line.
         }
     },
+    'oracle_cables': {
+        'mission': ORACLE,
+        'indices': {
+            1380, # That's one ... at the station list.
+            1400, # One final cable, Arbiter.
+        }
+    },
+    'oracle_total': {
+        'mission': ORACLE,
+        'indices': {
+            50, # He's using a holo-drone. He must be close!
+            60, # Come out so we may kill you.
+            70, # Hahaha, get in line.
+            1380, # That's one ... at the station list.
+            1400, # One final cable, Arbiter.
+        },
+        'nototal': True,
+    },
+    'regret_first_elevator': {
+        'mission': REGRET,
+        'indices': {
+            1000, # Ah now I see. ... to the outlying structures.
+            1010, # Looks like we're going down.
+            1020, # Unless you'd prefer to swim.
+        }
+    },
     'regret_end': {
         'mission': REGRET,
         'indices': {
             220, # Bad news. ... We need to get out of here!
         }
+    },
+    'regret_full': {
+        'mission': REGRET,
+        'indices': {
+            1000, # Ah now I see. ... to the outlying structures.
+            1010, # Looks like we're going down.
+            1020, # Unless you'd prefer to swim.
+            220, # Bad news. ... We need to get out of here!
+        },
+        'nototal': True,
     },
     'si_end_fight': {
         'mission': SACRED_ICON,
@@ -181,7 +249,6 @@ SOUNDS_TO_CHECK = {
             2150, # That prophet ... take it from him.
             2140, # Let me get these doors...
         },
-        'nototal': True,
     },
     'gm_all_doors': {
         'mission': GRAVEMIND,
@@ -189,7 +256,6 @@ SOUNDS_TO_CHECK = {
             2060, # Right this way!
             # 2300, # Here, Chief! Jump in! [Only bottle-necked if prison skip is faster.]
         },
-        'nototal': True,
     },
     'gm_end': {
         'mission': GRAVEMIND,
@@ -201,7 +267,6 @@ SOUNDS_TO_CHECK = {
             2590, # This isn't good ... In Amber Clad's wreckage.
             2600, # Let's get the index ... really ugly.
         },
-        'nototal': True,
     },
     'gm_full': {
         'mission': GRAVEMIND,
@@ -220,7 +285,8 @@ SOUNDS_TO_CHECK = {
             2670, # They'll need your help.
             2590, # This isn't good ... In Amber Clad's wreckage.
             2600, # Let's get the index ... really ugly.
-        }
+        },
+        'nototal': True,
     },
     'tgj_scarab_door': {
         'mission': THE_GREAT_JOURNEY,

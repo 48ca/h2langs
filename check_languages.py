@@ -55,11 +55,11 @@ def find_durations(mission_name, indices, variants, mission) -> Optional[Dict[st
         total_durations[code] = total_dur
     return total_durations
 
-def print_name(name):
-    print('==== {} ===='.format(name))
+def print_name(name, totals):
+    print('==== {} ==== {}'.format(name, '(no totals)' if not totals else ''))
 
-def print_durations(name, durations):
-    print_name(name)
+def print_durations(name, durations, totals):
+    print_name(name, totals)
     sd = sorted(durations, key=durations.get)
     if not sd:
         raise RuntimeError('no sorted durations')
@@ -110,14 +110,14 @@ def main() -> int:
         variants = sound.get('variants')
         nototal = sound.get('nototal')
         if mission_id.key not in missions:
-            print_name(name)
+            print_name(name, not nototal)
             print('ERROR: Bad config: {}, mission not found'.format(name))
             continue
 
         mission = missions[mission_id.key]
         if not variants:
             durations = find_durations(mission_id.key, indices, {}, mission)
-            print_durations(name, durations)
+            print_durations(name, durations, not nototal)
             if not nototal:
                 for variant in language_totals:
                     for lang, dur in durations.items():
@@ -134,7 +134,7 @@ def main() -> int:
             for instance in itertools.product(*variants.values()):
                 variants_to_try = dict(zip(variants.keys(), instance))
                 durations = find_durations(mission_id.key, indices, variants_to_try, mission)
-                print_durations('{} [variant={}]'.format(name, variants_to_try), durations)
+                print_durations('{} [variant={}]'.format(name, variants_to_try), durations, not nototal)
                 if not nototal:
                     for lang, dur in durations.items():
                         for var_val in variants_to_try.values():
@@ -150,7 +150,7 @@ def main() -> int:
                                 raise RuntimeError('Bad total counting')
 
     for variant, tot in language_totals.items():
-        print_durations('full_game [variants={}]'.format(variant), tot)
+        print_durations('full_game [variants={}]'.format(variant), tot, True)
 
     return 0
 
