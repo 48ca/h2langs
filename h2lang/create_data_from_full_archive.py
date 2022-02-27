@@ -9,7 +9,7 @@ from typing import List, Tuple, Optional
 from .common import SoundFile, MissionLang, Mission, LANGUAGES
 from .missions import MISSIONS
 
-SOUND_NAME_REGEX = '^(l(?P<level>[^_]+)_(?P<index>[^_]+)_(?P<speaker>[^_]+)\\[(?P<variant>.*)\\])\\.wav$'
+SOUND_NAME_REGEX = '^([lcx](?P<level>[^_]+)_(?P<index>[^_]+)_(?P<speaker>[^_]+)\\[(?P<variant>.*)\\])\\.wav$'
 SOUND_NAME_PAT = re.compile(SOUND_NAME_REGEX)
 
 PICKLE_FILENAME = 'sound-data-new.pkl'

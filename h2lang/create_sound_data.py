@@ -40,11 +40,11 @@ def get_files_from_sound_dir(sound_dir: str) -> Tuple[Optional[str], MissionLang
     lvl_dialog_dir = os.path.join(sound_dir, 'dialog', 'levels')
     if not os.path.isdir(lvl_dialog_dir):
         return 'sound directory has incorrect structure: {}'.format(lvl_dialog_dir), None
-    bsps = os.listdir(lvl_dialog_dir)
-    if len(bsps) != 1:
-        return 'found more than one bsp for mission: {}'.format(bsps), None
-    bsp = bsps[0]
-    real_dir = os.path.join(lvl_dialog_dir, bsp, 'mission')
+    levels = os.listdir(lvl_dialog_dir)
+    if len(levels) != 1:
+        return 'found more than one level for mission: {}'.format(levels), None
+    level = levels[0]
+    real_dir = os.path.join(lvl_dialog_dir, level, 'mission')
     if not os.path.isdir(real_dir):
         return 'not a directory: {}'.format(real_dir), None
 
