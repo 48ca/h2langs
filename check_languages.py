@@ -63,7 +63,7 @@ SOUNDS_THAT_MATTER = {
                 960, # If your shields ... fully-charged.
                 970, # That, or he can hide behind me.
                 1000, # You done with ... training wheels.
-                1010, # His armor's working fine. [Potential chilli-hole skip.]
+                1010, # His armor's working fine. [Potential chili-hole skip.]
                 980, # You're free to go ... take things slow.
             },
             'variants': {
@@ -375,6 +375,17 @@ def get_levels(archive: str):
 
     return levels
 
+def print_durations(name, durations):
+    print('==== {} ===='.format(name))
+    sd = sorted(durations, key=durations.get)
+    if not sd:
+        raise RuntimeError('no sorted durations')
+
+    best_lang = sd[0]
+    fastest = durations[best_lang]
+    for lang in sd:
+        print('{} => +{}'.format(lang, durations[lang] - fastest))
+
 def main() -> int:
     if len(sys.argv) < 2:
         sys.stderr.write('usage: {} <path-to-archive OR path-to-pickle>\n'.format(sys.argv[0]))
@@ -408,13 +419,13 @@ def main() -> int:
 
         level = levels[level_name]
         if not variants:
-            print('Checking', name)
-            print(find_durations(level_name, indices, {}, level))
+            durations = find_durations(level_name, indices, {}, level)
+            print_durations(name, durations)
         if variants:
             for instance in itertools.product(*variants.values()):
                 variants_to_try = dict(zip(variants.keys(), instance))
-                print('Checking {} [variant={}]'.format(name, variants_to_try))
-                print(find_durations(level_name, indices, variants_to_try, level))
+                durations = find_durations(level_name, indices, variants_to_try, level)
+                print_durations('{} [variant={}]'.format(name, variants_to_try), durations)
 
     return 0
 
