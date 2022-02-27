@@ -54,8 +54,11 @@ def find_durations(mission_name, indices, variants, mission) -> Optional[Dict[st
         total_durations[code] = total_dur
     return total_durations
 
-def print_durations(name, durations):
+def print_name(name):
     print('==== {} ===='.format(name))
+
+def print_durations(name, durations):
+    print_name(name)
     sd = sorted(durations, key=durations.get)
     if not sd:
         raise RuntimeError('no sorted durations')
@@ -98,11 +101,15 @@ def main() -> int:
         return 1
 
     for name, sound in SOUNDS_TO_CHECK.items():
+        if name.startswith('SKIP'):
+            continue
         mission_id = sound['mission']
         indices = sound['indices']
         variants = sound.get('variants')
+        nototal = sound.get('nototal')
         if mission_id.key not in missions:
-            sys.stderr.write('Bad config: {}, mission not found\n'.format(name))
+            print_name(name)
+            print('ERROR: Bad config: {}, mission not found'.format(name))
             continue
 
         mission = missions[mission_id.key]
