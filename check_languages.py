@@ -67,7 +67,7 @@ SOUNDS_THAT_MATTER = {
                 980, # You're free to go ... take things slow.
             },
             'variants': {
-                1010: { # Chilli-hole skip.
+                1010: { # Chili-hole skip.
                     'l01_1010a_gun', # [skip]
                     'l01_1010b_gun' # [no skip]
                 }
@@ -117,7 +117,7 @@ SOUNDS_THAT_MATTER = {
                 960, # If your shields ... fully-charged.
                 970, # That, or he can hide behind me.
                 1000, # You done with ... training wheels.
-                1010, # His armor's working fine. [Potential chilli-hole skip.]
+                1010, # His armor's working fine. [Potential chili-hole skip.]
                 980, # You're free to go ... take things slow.
 
                 # Don't worry, I'll hold his hand.
@@ -129,7 +129,7 @@ SOUNDS_THAT_MATTER = {
                 Special(10, lambda dur: max(0, dur - 1))
             },
             'variants': {
-                1010: { # Chilli-hole skip.
+                1010: { # Chili-hole skip.
                     'l01_1010a_gun', # [skip]
                     'l01_1010b_gun' # [no skip]
                 }
@@ -297,7 +297,6 @@ def find_durations(level_name, indices, variants, level) -> Optional[Dict[str, f
 
             files = language.files[idx]
             if idx not in variants and len(files) > 1:
-                # Not implemented.
                 print('One of the requested sound files has multiple variants that were not specified. skipping...')
                 return None
             if len(files) == 0:
@@ -384,7 +383,7 @@ def print_durations(name, durations):
     best_lang = sd[0]
     fastest = durations[best_lang]
     for lang in sd:
-        print('{} => +{}'.format(lang, durations[lang] - fastest))
+        print('{:9s} => +{}'.format(LANGUAGES[lang], durations[lang] - fastest))
 
 def main() -> int:
     if len(sys.argv) < 2:
