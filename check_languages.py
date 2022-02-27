@@ -3,6 +3,7 @@
 import os
 import sys
 import itertools
+import copy
 
 from typing import Tuple, List, Optional, Set, Dict
 
@@ -100,6 +101,7 @@ def main() -> int:
                 sys.stderr.write('Missions mismatched: {}\n'.format(l))
         return 1
 
+    language_totals = {'': {l: 0. for l in LANGUAGES}}
     for name, sound in SOUNDS_TO_CHECK.items():
         if name.startswith('SKIP'):
             continue
@@ -116,11 +118,36 @@ def main() -> int:
         if not variants:
             durations = find_durations(mission_id.key, indices, {}, mission)
             print_durations(name, durations)
+            for variant in language_totals:
+                for lang, dur in durations.items():
+                    language_totals[variant][lang] += dur
         if variants:
+            new_totals = {}
+            for existing_variant in language_totals:
+                for new_variants in variants.values():
+                    for new_variant in new_variants:
+                        new_totals["{}|{}".format(existing_variant, new_variant)] = copy.deepcopy(language_totals[existing_variant])
+            language_totals = new_totals
+
             for instance in itertools.product(*variants.values()):
                 variants_to_try = dict(zip(variants.keys(), instance))
                 durations = find_durations(mission_id.key, indices, variants_to_try, mission)
                 print_durations('{} [variant={}]'.format(name, variants_to_try), durations)
+                for lang, dur in durations.items():
+                    for var_val in variants_to_try.values():
+                        num_added = 0
+                        num_missed = 0
+                        for e_var in language_totals:
+                            if var_val in e_var:
+                                language_totals[e_var][lang] += dur
+                                num_added += 1
+                            else:
+                                num_missed += 1
+                        if num_added != num_missed or (num_added + num_missed < len(language_totals)):
+                            raise RuntimeError('Bad total counting')
+
+    for variant, tot in language_totals.items():
+        print_durations('full_game [variants={}]'.format(variant), tot)
 
     return 0
 
