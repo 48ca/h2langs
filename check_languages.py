@@ -58,7 +58,7 @@ def find_durations(mission_name, indices, variants, mission, difficulty) -> Opti
     return total_durations
 
 def print_name(name, totals):
-    print('==== {} ==== {}'.format(name, '(no totals)' if not totals else ''))
+    print('==== {} ===={}'.format(name, ' (no totals)' if not totals else ''))
 
 def print_durations(name, durations, totals):
     print_name(name, totals)
