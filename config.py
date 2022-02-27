@@ -9,7 +9,7 @@ class Special:
         return self._func(duration)
 
 SOUNDS_TO_CHECK = {
-    'SKIP_armory_training_look': {
+    'armory_training_look': {
         'mission': ARMORY,
         'indices': {
             600, # Well... I guess it was all obsolete anyway.
@@ -26,16 +26,18 @@ SOUNDS_TO_CHECK = {
             740, # Okay.
             770, # Everything checks out.
         },
+        'nototal': True,
     },
-    'SKIP_armory_training_move': {
+    'armory_training_move': {
         'mission': ARMORY,
         'indices': {
             790, # Stand by. I'm going to offline the inhibitors.
             800, # Move aroudn a little, get a feel for it.
             810, # When you're ready ... by the zapper.
         },
+        'nototal': True,
     },
-    'SKIP_armory_training_shield': {
+    'armory_training_shield': {
         'mission': ARMORY,
         'indices': {
             3150, # Pay attention ... over this once.
@@ -53,8 +55,9 @@ SOUNDS_TO_CHECK = {
                 'l01_1010b_gun' # [no skip]
             }
         },
+        'nototal': True,
     },
-    'SKIP_armory_training_done': {
+    'armory_training_done': {
         'mission': ARMORY,
         'indices': {
             # Don't worry, I'll hold his hand.
@@ -63,13 +66,15 @@ SOUNDS_TO_CHECK = {
             3360, # So Johnson, ... in one piece?
             990, # Sorry, Guns. It's classified. 
         },
+        'nototal': True,
     },
-    'SKIP_armory_training_tram': {
+    'armory_training_tram': {
         'mission': ARMORY,
         'indices': {
             # Earth. Haven't seen it in years.
             Special(10, lambda dur: max(0, dur - 1))
         },
+        'nototal': True,
     },
     'armory_full': {
         'mission': ARMORY,
@@ -114,7 +119,8 @@ SOUNDS_TO_CHECK = {
                 'l01_1010a_gun', # [skip]
                 'l01_1010b_gun' # [no skip]
             }
-        }
+        },
+        'nototal': True,
     },
     'cairo_malta': {
         'mission': CAIRO_STATION,
@@ -140,7 +146,8 @@ SOUNDS_TO_CHECK = {
             50, # He's using a holo-drone. He must be close!
             60, # Come out so we may kill you.
             70, # Hahaha, get in line.
-        }
+        },
+        'nototal': True,
     },
     # It's a little bit unclear to me how dialog skip works, but I think
     # the effect is that we don't wait for the 'holo-drone' line.
@@ -164,7 +171,7 @@ SOUNDS_TO_CHECK = {
             170, # Arbiter! What are you doing here?
         }
     },
-    'SKIP_gm_begin': {
+    'gm_begin': {
         'mission': GRAVEMIND,
         'indices': {
             1000, # The demon ... chamber?
@@ -173,16 +180,18 @@ SOUNDS_TO_CHECK = {
             2110, # Put me down on one of the pedestals near the door.
             2150, # That prophet ... take it from him.
             2140, # Let me get these doors...
-        }
+        },
+        'nototal': True,
     },
-    'SKIP_gm_all_doors': {
+    'gm_all_doors': {
         'mission': GRAVEMIND,
         'indices': {
             2060, # Right this way!
             # 2300, # Here, Chief! Jump in! [Only bottle-necked if prison skip is faster.]
-        }
+        },
+        'nototal': True,
     },
-    'SKIP_gm_end': {
+    'gm_end': {
         'mission': GRAVEMIND,
         'indices': {
             2640, # Hang on... I'm picking up two more transponders.
@@ -191,7 +200,8 @@ SOUNDS_TO_CHECK = {
             2670, # They'll need your help.
             2590, # This isn't good ... In Amber Clad's wreckage.
             2600, # Let's get the index ... really ugly.
-        }
+        },
+        'nototal': True,
     },
     'gm_full': {
         'mission': GRAVEMIND,
