@@ -6,8 +6,11 @@ import re
 import wave
 import contextlib
 import itertools
+import pickle
 
 from typing import Tuple, List, Optional, Set, Dict
+
+PICKLE_FILENAME = 'sound-data.pkl'
 
 class Special:
     def __init__(self, index, func):
@@ -321,18 +324,18 @@ def find_durations(level_name, indices, variants, level) -> Optional[Dict[str, f
         total_durations[code] = total_dur
     return total_durations
 
-def main() -> int:
-    if len(sys.argv) < 2:
-        sys.stderr.write('usage: {} <path-to-archive>\n'.format(sys.argv[0]))
-        return 1
-
-    archive = sys.argv[1]
-
-    if not os.path.exists(archive):
-        sys.stderr.write('Path does not exist: {}\n'.format(arhive))
-        return 1
-
+def get_levels(archive: str):
     extra_files = []
+
+    if archive == PICKLE_FILENAME:
+        # Attempt to load the data from the pickle data.
+        with open(PICKLE_FILENAME, 'rb') as f:
+            return pickle.load(f)
+
+    if not os.path.isdir(archive):
+        sys.stderr.write('Not a directory: {}\n'.format(archive))
+        return None
+
     lst = os.listdir(archive)
 
     levels = {}
@@ -364,6 +367,27 @@ def main() -> int:
 
     if extra_files:
         sys.stderr.write('Found extra files: {}\n'.format(extra_files))
+        return None
+
+    with open(PICKLE_FILENAME, 'wb') as f:
+        print('Dumped data to {}'.format(PICKLE_FILENAME))
+        pickle.dump(levels, f)
+
+    return levels
+
+def main() -> int:
+    if len(sys.argv) < 2:
+        sys.stderr.write('usage: {} <path-to-archive OR path-to-pickle>\n'.format(sys.argv[0]))
+        return 1
+
+    archive = sys.argv[1]
+
+    if not os.path.exists(archive):
+        sys.stderr.write('Path does not exist: {}\n'.format(arhive))
+        return 1
+
+    levels = get_levels(archive)
+    if not levels:
         return 1
 
     # Make sure that there are no mismatched files.
