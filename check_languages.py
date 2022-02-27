@@ -73,11 +73,13 @@ def print_durations(name, durations, totals):
 def main() -> int:
     use_new_format = False
     noarmory = False
+    no_totalling = False
 
     parser = argparse.ArgumentParser(description='Process halo timing differences.')
     parser.add_argument('archive', type=str, help='Path to the archive (or pickle)')
     parser.add_argument('--noarmory', default=False, help='Don\'t include armory in full-game duration summation.', action='store_const', const=noarmory)
     parser.add_argument('--new', default=False, help='Use new archive format (experimental).', action='store_const', const=use_new_format)
+    parser.add_argument('--nototaling', default=False, help='Don\'t total anything.', action='store_const', const=no_totalling)
     parser.add_argument('--difficulty', type=str, default='easy', help='Specify the difficulty.')
     args = parser.parse_args()
 
@@ -115,7 +117,7 @@ def main() -> int:
                 sys.stderr.write('Missions mismatched: {}\n'.format(l))
         return 1
 
-    language_totals = {'': {l: 0. for l in LANGUAGES}}
+    language_totals = {'': {}}
     for name, sound in SOUNDS_TO_CHECK.items():
         if name.startswith('SKIP'):
             continue
@@ -128,7 +130,19 @@ def main() -> int:
             print('ERROR: Bad config: {}, mission not found'.format(name))
             continue
 
-        do_totaling = not nototal and not (noarmory and mission_id == ARMORY.id)
+        do_totaling = not no_totalling and not nototal and not (noarmory and mission_id == ARMORY.id)
+        def add_to_totals(mkey, variant, lang, dur):
+            if 'full_game' not in language_totals[variant]:
+                language_totals[variant]['full_game'] = {}
+            if lang not in language_totals[variant]['full_game']:
+                language_totals[variant]['full_game'][lang] = 0.
+            language_totals[variant]['full_game'][lang] += dur
+
+            if mkey not in language_totals[variant]:
+                language_totals[variant][mkey] = {}
+            if lang not in language_totals[variant][mission_id.key]:
+                language_totals[variant][mkey][lang] = 0.
+            language_totals[variant][mkey][lang] += dur
 
         mission = missions[mission_id.key]
         if not variants:
@@ -137,7 +151,7 @@ def main() -> int:
             if do_totaling:
                 for variant in language_totals:
                     for lang, dur in durations.items():
-                        language_totals[variant][lang] += dur
+                        add_to_totals(mission_id.key, variant, lang, dur)
         if variants:
             if do_totaling:
                 new_totals = {}
@@ -158,15 +172,18 @@ def main() -> int:
                             num_missed = 0
                             for e_var in language_totals:
                                 if var_val in e_var:
-                                    language_totals[e_var][lang] += dur
+                                    add_to_totals(mission_id.key, e_var, lang, dur)
                                     num_added += 1
                                 else:
                                     num_missed += 1
                             if num_added != num_missed or (num_added + num_missed < len(language_totals)):
                                 raise RuntimeError('Bad total counting')
 
-    for variant, tot in language_totals.items():
-        print_durations('full_game [variants={}]'.format(variant), tot, True)
+    if do_totaling:
+        print('========== TOTALS ==========')
+        for variant, cats in language_totals.items():
+            for cat, tot in cats.items():
+                print_durations('{} [variants={}]'.format(cat, variant), tot, True)
 
     return 0
 
