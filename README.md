@@ -1,6 +1,9 @@
-# Halo 2 Audio Difference Analyzer
+# Halo 2 Language Difference Analyzer
 
 To check which language is fastest.
+
+With current strategies, for full-game, German is the fastest!
+Check the `output` directory.
 
 The pickle dump that is included has the data from all 8 languages for:
 
