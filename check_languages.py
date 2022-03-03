@@ -57,11 +57,11 @@ def find_durations(mission_name, indices, variants, mission, difficulty) -> Opti
         total_durations[code] = total_dur
     return total_durations
 
-def print_name(name, totals):
-    print(' ====== {} ======{}'.format(name, ' (no totals)' if not totals else ''))
+def print_name(name, totals, stream=sys.stdout):
+    stream.write(' ====== {} ======{}\n'.format(name, ' (no totals)' if not totals else ''))
 
-def print_durations(name, durations, totals):
-    print_name(name, totals)
+def print_durations(name, durations, totals, stream=sys.stdout):
+    print_name(name, totals, stream)
     sd = sorted(durations, key=durations.get)
     if not sd:
         raise RuntimeError('no sorted durations')
@@ -69,14 +69,16 @@ def print_durations(name, durations, totals):
     best_lang = sd[0]
     fastest = durations[best_lang]
     for lang in sd:
-        print('{:9s} => +{:10.6f} (total:{:11.6f})'.format(LANGUAGES[lang], durations[lang] - fastest, durations[lang]))
+        stream.write('{:9s} => +{:10.6f} (total:{:11.6f})\n'.format(LANGUAGES[lang], durations[lang] - fastest, durations[lang]))
 
 class VariantSet():
     def __init__(self):
-        self._variants = set()
+        # Use a list because it guarantees order, but really
+        # we should use an ordered set.
+        self._variants = []
 
     def add_variant(self, variant):
-        self._variants.add(variant)
+        self._variants.append(variant)
 
     def has_variant(self, variant):
         return variant in self._variants
@@ -137,25 +139,29 @@ class LanguageTotalTracker():
                             num_missed += 1
             if num_added != num_missed:
                 raise RuntimeError('Bad total counting: {} {}'.format(num_added, num_missed))
-    def print_out(self):
-        print(' ========== TOTALS ========== ')
+    def print_out(self, stderr=False):
+        if not stderr:
+            sys.stdout.write(' ========== TOTALS ========== \n')
+        stream = sys.stderr if stderr else sys.stdout
         for cat in self._categories:
             real_name = MISSIONS[cat].name if cat in MISSIONS else cat
             for variant, durations in self._categories[cat].items():
                 if variant != DEFAULT_VARIANT:
-                    print_durations('{} [variant={}]'.format(real_name, variant), durations, True)
+                    print_durations('{} [variant={}]'.format(real_name, variant), durations, True, stream)
                 else:
-                    print_durations(real_name, durations, True)
+                    print_durations(real_name, durations, True, stream)
 
 def main() -> int:
     parser = argparse.ArgumentParser(description='Process halo timing differences.')
     parser.add_argument('archive', type=str, help='Path to the archive (or pickle)')
-    parser.add_argument('--noarmory', help='Don\'t include armory in full-game duration summation.', action='store_true')
+    parser.add_argument('--noarmory', help='Don\'t include armory.', action='store_true')
     parser.add_argument('--new', default=False, help='Use new archive format (experimental).', action='store_true')
     parser.add_argument('--nototaling', default=False, help='Don\'t total anything.', action='store_true')
     parser.add_argument('--difficulty', type=str, default='easy', help='Specify the difficulty.')
     parser.add_argument('--exclude', nargs='+',
             help='Exclude a particular section from analysis (e.g., if doing Arbiter Glass Clip, it shouldn\'t be included.')
+    parser.add_argument('--stderrtotals', default=False, action='store_true',
+            help='Write totals to stderr.')
     args = parser.parse_args()
 
     if args.difficulty == 'easy':
@@ -203,6 +209,8 @@ def main() -> int:
         if name.startswith('SKIP'):
             continue
         mission_id = sound['mission']
+        if mission_id.key == ARMORY.key and noarmory:
+            continue
         indices = sound['indices']
         variants = sound.get('variants')
         nototal = sound.get('nototal')
@@ -211,7 +219,7 @@ def main() -> int:
             print('ERROR: Bad config: {}, mission not found'.format(name))
             continue
 
-        do_totaling = not (global_no_totaling or nototal or (noarmory and mission_id.key == ARMORY.key))
+        do_totaling = not (global_no_totaling or nototal)
 
         mission = missions[mission_id.key]
         if not variants:
@@ -231,7 +239,7 @@ def main() -> int:
                     language_totals.add_variant_time(mission_id.key, variants_to_try, durations)
 
     if do_totaling:
-        language_totals.print_out()
+        language_totals.print_out(args.stderrtotals)
 
     return 0
 

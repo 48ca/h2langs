@@ -67,10 +67,10 @@ SOUNDS_TO_CHECK = {
             980, # You're free to go ... take things slow.
         },
         'variants': {
-            1010: { # Chili-hole skip.
+            1010: [ # Chili-hole skip.
                 'l01_1010a_gun', # [skip]
                 'l01_1010b_gun' # [no skip]
-            }
+            ]
         },
     },
     'armory_training_done': {
@@ -121,7 +121,7 @@ SOUNDS_TO_CHECK = {
             480, # I will defend the Oracle.
         }
     },
-    'oracle_start_standard': {
+    'SKIP_oracle_start_standard': {
         'mission': ORACLE,
         'indices': {
             40, # I wondered ... I'm flattered.
