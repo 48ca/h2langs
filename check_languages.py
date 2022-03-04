@@ -8,8 +8,7 @@ import argparse
 
 from typing import Tuple, List, Optional, Set, Dict
 
-from h2lang.create_sound_data import get_missions
-from h2lang.create_data_from_full_archive import get_missions_new
+from h2lang.load_data import get_missions
 from h2lang.common import Mission, LANGUAGES
 from h2lang.missions import ARMORY, MISSIONS
 from config import SOUNDS_TO_CHECK, Special, Difficulty
@@ -155,7 +154,6 @@ def main() -> int:
     parser = argparse.ArgumentParser(description='Process halo timing differences.')
     parser.add_argument('archive', type=str, help='Path to the archive (or pickle)')
     parser.add_argument('--noarmory', help='Don\'t include armory.', action='store_true')
-    parser.add_argument('--new', default=False, help='Use new archive format (experimental).', action='store_true')
     parser.add_argument('--nototaling', default=False, help='Don\'t total anything.', action='store_true')
     parser.add_argument('--difficulty', type=str, default='easy', help='Specify the difficulty.')
     parser.add_argument('--exclude', nargs='+',
@@ -178,7 +176,6 @@ def main() -> int:
 
     noarmory = args.noarmory
     global_no_totaling = args.nototaling
-    use_new_format = args.new
 
     archive = args.archive
 
@@ -186,10 +183,7 @@ def main() -> int:
         sys.stderr.write('Path does not exist: {}\n'.format(arhive))
         return 1
 
-    if use_new_format:
-        missions = get_missions_new(archive)
-    else:
-        missions = get_missions(archive)
+    missions = get_missions(archive)
 
     if not missions:
         return 1

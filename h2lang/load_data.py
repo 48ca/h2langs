@@ -12,7 +12,7 @@ from .missions import MISSIONS
 SOUND_NAME_REGEX = '^([lcx](?P<level>[^_]+)_(?P<index>[^_]+)_(?P<speaker>[^_]+)\\[(?P<variant>.*)\\])\\.wav$'
 SOUND_NAME_PAT = re.compile(SOUND_NAME_REGEX)
 
-PICKLE_FILENAME = 'sound-data-new.pkl'
+PICKLE_FILENAME = 'sound-data.pkl'
 
 def try_files(directory: str) -> Tuple[Optional[str], MissionLang]:
     extra_files = []
@@ -37,7 +37,7 @@ def try_files(directory: str) -> Tuple[Optional[str], MissionLang]:
 
     return None, final_lvl_lang
 
-def get_missions_new(archive: str):
+def get_missions(archive: str):
     extra_files = []
 
     if archive == PICKLE_FILENAME:
