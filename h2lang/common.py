@@ -23,6 +23,9 @@ class SoundFile:
             rate = f.getframerate()
             self.duration = frames / rate
 
+    def apply_correction(self, correction):
+        self.duration *= correction
+
 class MissionLang:
     def __init__(self):
         self._extra_files = []

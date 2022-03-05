@@ -33,6 +33,11 @@ def try_files(directory: str) -> Tuple[Optional[str], MissionLang]:
             return 'improper filename: {} (parsed: {})'.format(sound, gd), None
 
         parsed_file = SoundFile(full_path, gd)
+        # For the dump that I am using, the output sample rate is 44100 when it should be
+        # between 44786 and 44787 (manually checked this), which means all the durations
+        # are slightly longer than they should be.
+        # The discrepancy in the sample rate is likely a bug in the extractor.
+        parsed_file.apply_correction(44100/44786)
         final_lvl_lang.add_file(parsed_file)
 
     return None, final_lvl_lang
@@ -82,7 +87,6 @@ def get_missions(archive: str):
 
     if extra_files:
         sys.stderr.write('Found extra files: {}\n'.format(extra_files))
-        return None
 
     with open(PICKLE_FILENAME, 'wb') as f:
         print('Dumped data to {}'.format(PICKLE_FILENAME))
