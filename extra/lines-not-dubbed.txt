@@ -1,0 +1,13 @@
+japanese:
+dialog/combat/sgt_johnson/06_outburst/cllcoward
+dialog/combat/sgt_cautious/22_roar/melee
+dialog/combat/sgt_cautious/21_yelp/panic
+dialog/combat/grunt_crazy/16_taunt/tnt_sprssed
+dialog/combat/grunt_crazy/15_curse/crs_mjrfoe_drvsh
+dialog/combat/grunt_crazy/13_player/grt_plr_srprs
+dialog/combat/grunt_crazy/08_judge/betray
+dialog/combat/elite_loose/14_vehicle/grt_plr_vcl
+dialog/combat/elite_loose/09_order/newordr_fllwplr
+
+chinese:
+sound/dialog/combat/miranda/13_player/look_lngtme
