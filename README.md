@@ -11,3 +11,9 @@ You can run it with:
 ```
 ./check_languages.py
 ```
+
+## How do you know which lines matter?
+
+A two-step process: play the game and find where we *could* be waiting for dialogue, and then read through the scripts to see (1) if we are really waiting on something, (2) which lines we are waiting on, and (3) how we are waiting for those lines.
+
+This information has been distilled into `config.py`.
