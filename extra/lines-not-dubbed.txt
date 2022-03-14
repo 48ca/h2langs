@@ -10,4 +10,4 @@ dialog/combat/elite_loose/14_vehicle/grt_plr_vcl
 dialog/combat/elite_loose/09_order/newordr_fllwplr
 
 chinese:
-sound/dialog/combat/miranda/13_player/look_lngtme
+dialog/combat/miranda/13_player/look_lngtme
