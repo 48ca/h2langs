@@ -208,7 +208,7 @@ SOUNDS_TO_CHECK = {
         'mission': GRAVEMIND,
         'indices': {
             2060, # Right this way!
-            # 2300, # Here, Chief! Jump in! [Only bottle-necked if prison skip is faster.]
+            2300, # Here, Chief! Jump in! [Only bottle-necked if prison skip is faster.]
         },
     },
     'gm_end': {
